@@ -5,14 +5,25 @@ import {
   MenuIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/outline";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { selectItems } from "../slices/cartSlice";
 
 function Header() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const items = useSelector(selectItems);
+
   return (
     <header>
       {/* Top Nav */}
       <div className="flex item-center bg-amazon_blue p-1 py-2 flex-grow">
         <div className="mt-2 flex item-center flex-grow sm:flex-grow-0">
           <Image
+            onClick={() => {
+              router.push("/");
+            }}
             src="https://links.papareact.com/f90"
             alt="Amazon"
             width={150}
@@ -31,17 +42,24 @@ function Header() {
         </div>
         {/* Right Elements */}
         <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
-          <div className="link">
-            <p>Hello</p>
+          <div onClick={!session ? signIn : signOut} className="link">
+            <p className="hover:underline">
+              {session ? `Hello, ${session.user.name}` : "Sign In"}
+            </p>
             <p className="font-extrabold md:text-sm">Account & lists</p>
           </div>
           <div className="link">
             <p>Returns</p>
             <p className="font-extrabold md:text-sm">& Orders</p>
           </div>
-          <div className="relative link flex items-center">
+          <div
+            onClick={() => {
+              router.push("/checkout");
+            }}
+            className="relative link flex items-center"
+          >
             <span className="absolute top-0 right-0 md:right-6 h-4 w-4 bg-yellow-400 text-center text-black font-bold rounded-full">
-              0
+              {items.length}
             </span>
             <ShoppingCartIcon className="h-10" />
             <p className="hidden md:inline font-extrabold md:text-sm mt-2">
