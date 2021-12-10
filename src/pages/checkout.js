@@ -5,11 +5,11 @@ import { useSelector } from "react-redux";
 import { selectItems, selectTotal } from "../slices/cartSlice";
 import CheckoutProduct from "../components/CheckoutProduct";
 import Currency from "react-currency-formatter";
-import { useSession } from "next-auth/react";
+import { useSession } from "next-auth/client";
 
 function Checkout() {
   const items = useSelector(selectItems);
-  const { data: session, status } = useSession();
+  const { session } = useSession();
   const total = useSelector(selectTotal);
 
   return (
