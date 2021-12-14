@@ -1,6 +1,5 @@
 import { getSession } from "next-auth/client";
 import Head from "next/head";
-import Image from "next/image";
 import Banner from "../components/Banner";
 import Header from "../components/Header";
 import ProductFeed from "../components/ProductFeed";
@@ -31,8 +30,8 @@ export async function getServerSideProps(context) {
   );
   return {
     props: {
-      products,
       session,
+      products,
     },
   };
 }
