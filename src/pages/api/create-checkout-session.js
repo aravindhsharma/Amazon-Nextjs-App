@@ -1,4 +1,6 @@
-const stripe = require("stripe")(`${process.env.STRIPE_SECRET_KEY}`);
+const stripe = require("stripe")(
+  "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"
+);
 
 const CheckoutSession = async (req, res) => {
   const { items, email } = req.body;
